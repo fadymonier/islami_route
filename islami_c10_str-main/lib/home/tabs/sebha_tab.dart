@@ -8,26 +8,38 @@ class SebhaTab extends StatefulWidget {
   State<SebhaTab> createState() => _SebhaTabState();
 }
 
-String tasbih1 = "سبحان الله";
-String tasbih2 = "الحمد لله";
-String tasbih3 = "لا اله الا الله";
-
-int counter = 0;
-
 class _SebhaTabState extends State<SebhaTab> {
+  int counter = 0;
+  int currentIndex = 0;
+
+  List<String> tasbih = ["سبحان الله", "الحمد لله", "لا اله الا الله"];
+
+  void tasbihCounter() {
+    setState(() {
+      counter++;
+      if (counter % 30 == 0) {
+        counter = 0;
+        currentIndex = (currentIndex + 1) % tasbih.length;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset("assets/images/head_sebha_logo.png"),
+            // Ensure image exists
             InkWell(
-                onTap: () {},
-                child: Image.asset("assets/images/body_sebha_logo.png")),
-            SizedBox(
+              onTap: tasbihCounter,
+              child: Image.asset(
+                  "assets/images/body_sebha_logo.png"), // Ensure image exists
+            ),
+            const SizedBox(
               height: 25,
             ),
             Text(
@@ -37,7 +49,7 @@ class _SebhaTabState extends State<SebhaTab> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Container(
@@ -45,38 +57,36 @@ class _SebhaTabState extends State<SebhaTab> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: Color(0xffB7935F),
+                color: const Color(0xffB7935F),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-
-
                   "$counter",
                   style: GoogleFonts.inter(
                     fontSize: 25,
-
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: Color(0xffB7935F),
+                color: const Color(0xffB7935F),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "سبحان الله",
+                  tasbih[currentIndex],
                   style: GoogleFonts.inter(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
